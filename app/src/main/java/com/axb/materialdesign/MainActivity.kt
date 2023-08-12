@@ -8,17 +8,17 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.axb.materialdesign.adapter.FruitAdapter
 import com.axb.materialdesign.bean.Fruit
 import com.axb.materialdesign.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val fruits = mutableListOf(
+    private val fruits = mutableListOf(
         Fruit("Apple", R.drawable.apple), Fruit(
             "Banana",
             R.drawable.banana
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             R.drawable.mango
         )
     )
-    val fruitList = ArrayList<Fruit>()
+    private val fruitList = ArrayList<Fruit>()
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +67,12 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = layoutManager
         val adapter = FruitAdapter(this, fruitList)
         binding.recyclerView.adapter = adapter
+
+        //刷新
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        binding.swipeRefresh.setOnRefreshListener {
+            refreshFruits(adapter)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -89,6 +95,18 @@ class MainActivity : AppCompatActivity() {
         repeat(50) {
             val index = (0 until fruits.size).random()
             fruitList.add(fruits[index])
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun refreshFruits(adapter: FruitAdapter) {
+        thread {
+            Thread.sleep(2000)
+            runOnUiThread {
+                initFruits()
+                adapter.notifyDataSetChanged()
+                binding.swipeRefresh.isRefreshing = false
+            }
         }
     }
 }
