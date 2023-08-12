@@ -23,6 +23,12 @@ class MainActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
+
+        binding.navView.setCheckedItem(R.id.navCall)
+        binding.navView.setNavigationItemSelectedListener {
+            binding.drawerLayout.closeDrawers()
+            true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -35,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             R.id.backup -> Toast.makeText(this, "You clicked Backup", Toast.LENGTH_LONG).show()
             R.id.delete -> Toast.makeText(this, "You clicked Delete", Toast.LENGTH_LONG).show()
             R.id.settings -> Toast.makeText(this, "You clicked Settings", Toast.LENGTH_LONG).show()
-            android.R.id.home-> binding.drawerLayout.openDrawer(GravityCompat.START)
+            android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }
         return true
     }

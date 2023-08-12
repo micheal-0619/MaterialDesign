@@ -19,12 +19,12 @@
     </FrameLayout>
 
     <!--layout_gravity这个属性是必须指定的-->
-    <TextView
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#FFF"
-        android:text="This is menu"
-        android:textSize="30sp" />
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
