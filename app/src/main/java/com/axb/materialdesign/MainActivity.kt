@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         //recyclerView
         initFruits()
-        val layoutManager = GridLayoutManager(this, 2)
+        val layoutManager = GridLayoutManager(this, 3)
         binding.recyclerView.layoutManager = layoutManager
         val adapter = FruitAdapter(this, fruitList)
         binding.recyclerView.adapter = adapter
